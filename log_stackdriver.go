@@ -48,7 +48,7 @@ func UseSyslog() bool {
 
 func (l *StackDriverLogger) Fatal(format string, args ...interface{}) {
 	if UseSyslog() {
-		_, file, no, ok := runtime.Caller(1)
+		_, file, no, ok := runtime.Caller(2)
 		if ok {
 			log.Printf(
 				fmt.Sprintf("[FATAL %s:%d] ", path.Base(file), no)+
@@ -68,7 +68,7 @@ func (l *StackDriverLogger) Fatal(format string, args ...interface{}) {
 
 func (l *StackDriverLogger) Error(format string, args ...interface{}) {
 	if UseSyslog() {
-		_, file, no, ok := runtime.Caller(1)
+		_, file, no, ok := runtime.Caller(2)
 		if ok {
 			log.Printf(
 				fmt.Sprintf("[ERROR %s:%d] ", path.Base(file), no)+
@@ -87,7 +87,7 @@ func (l *StackDriverLogger) Error(format string, args ...interface{}) {
 
 func (l *StackDriverLogger) Warning(format string, args ...interface{}) {
 	if UseSyslog() {
-		_, file, no, ok := runtime.Caller(1)
+		_, file, no, ok := runtime.Caller(2)
 		if ok {
 			log.Printf(
 				fmt.Sprintf("[WARNING %s:%d] ", path.Base(file), no)+
@@ -106,7 +106,7 @@ func (l *StackDriverLogger) Warning(format string, args ...interface{}) {
 
 func (l *StackDriverLogger) Info(format string, args ...interface{}) {
 	if UseSyslog() {
-		_, file, no, ok := runtime.Caller(1)
+		_, file, no, ok := runtime.Caller(2)
 		if ok {
 			log.Printf(
 				fmt.Sprintf("[INFO %s:%d] ", path.Base(file), no)+
@@ -125,7 +125,7 @@ func (l *StackDriverLogger) Info(format string, args ...interface{}) {
 
 func (l *StackDriverLogger) Debug(format string, args ...interface{}) {
 	if UseSyslog() {
-		_, file, no, ok := runtime.Caller(1)
+		_, file, no, ok := runtime.Caller(2)
 		if ok {
 			log.Printf(
 				fmt.Sprintf("[DEBUG %s:%d] ", path.Base(file), no)+

@@ -19,7 +19,7 @@ func NewSysLogger() Logger {
 func (l *SysLogger) Close() {}
 
 func (l *SysLogger) Fatal(format string, args ...interface{}) {
-	_, file, no, ok := runtime.Caller(1)
+	_, file, no, ok := runtime.Caller(2)
 	if ok {
 		log.Printf(
 			fmt.Sprintf("[FATAL %s:%d] ", path.Base(file), no)+
@@ -31,7 +31,7 @@ func (l *SysLogger) Fatal(format string, args ...interface{}) {
 }
 
 func (l *SysLogger) Error(format string, args ...interface{}) {
-	_, file, no, ok := runtime.Caller(1)
+	_, file, no, ok := runtime.Caller(2)
 	if ok {
 		log.Printf(
 			fmt.Sprintf("[ERROR %s:%d] ", path.Base(file), no)+
@@ -42,7 +42,7 @@ func (l *SysLogger) Error(format string, args ...interface{}) {
 }
 
 func (l *SysLogger) Warning(format string, args ...interface{}) {
-	_, file, no, ok := runtime.Caller(1)
+	_, file, no, ok := runtime.Caller(2)
 	if ok {
 		log.Printf(
 			fmt.Sprintf("[WARNING %s:%d] ", path.Base(file), no)+
@@ -53,7 +53,7 @@ func (l *SysLogger) Warning(format string, args ...interface{}) {
 }
 
 func (l *SysLogger) Info(format string, args ...interface{}) {
-	_, file, no, ok := runtime.Caller(1)
+	_, file, no, ok := runtime.Caller(2)
 	if ok {
 		log.Printf(
 			fmt.Sprintf("[INFO %s:%d] ", path.Base(file), no)+
@@ -64,7 +64,7 @@ func (l *SysLogger) Info(format string, args ...interface{}) {
 }
 
 func (l *SysLogger) Debug(format string, args ...interface{}) {
-	_, file, no, ok := runtime.Caller(1)
+	_, file, no, ok := runtime.Caller(2)
 	if ok {
 		log.Printf(
 			fmt.Sprintf("[DEBUG %s:%d] ", path.Base(file), no)+
