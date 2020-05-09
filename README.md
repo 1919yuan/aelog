@@ -8,21 +8,16 @@ AppEngine.
 
 ```go
 import (
-  "context"
   "github.com/1919yuan/aelog"
 )
 
 ...
 
-Log = aelog.CreateStackDriverLogger(context.Background(), nil)
-
-...
-
-Log.Debug("Testing StackDriverLogger: Debug")
-Log.Info("Testing StackDriverLogger: Info")
-Log.Warning("Testing StackDriverLogger: Warning")
-Log.Error("Testing StackDriverLogger: Error")
-Log.Fatal("Testing StackDriverLogger: Fatal")
+aelog.Debug("Testing: Debug")
+aelog.Info("Testing: Info")
+aelog.Warning("Testing: Warning")
+aelog.Error("Testing: Error")
+aelog.Fatal("Testing: Fatal")
 ```
 
 The logging will be done using the `log` package when the program is running

@@ -67,7 +67,7 @@ func TestStackDriverLogger(t *testing.T) {
 		}
 	}
 
-	logger := aelog.CreateStackDriverLogger(context.Background(), client)
+	logger := aelog.NewStackDriverLogger(context.Background(), client)
 	defer logger.Close()
 
 	logger.Debug("Testing StackDriverLogger: Debug")

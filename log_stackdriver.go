@@ -13,14 +13,14 @@ import (
 	"google.golang.org/appengine"
 )
 
-type StackDriver struct {
+type StackDriverLogger struct {
 	client *logging.Client
 	logger *logging.Logger
 }
 
-var _ Logger = &StackDriver{}
+var _ Logger = &StackDriverLogger{}
 
-func CreateStackDriverLogger(
+func NewStackDriverLogger(
 	ctx context.Context, client *logging.Client) Logger {
 	c := client
 	project_id := os.Getenv("GOOGLE_CLOUD_PROJECT")
@@ -32,21 +32,21 @@ func CreateStackDriverLogger(
 		}
 	}
 	logger := c.Logger(project_id)
-	return &StackDriver{
+	return &StackDriverLogger{
 		client: client,
 		logger: logger,
 	}
 }
 
-func (sd *StackDriver) Close() {
-	sd.client.Close()
+func (l *StackDriverLogger) Close() {
+	l.client.Close()
 }
 
 func UseSyslog() bool {
 	return appengine.IsDevAppServer() || strings.HasSuffix(os.Args[0], ".test")
 }
 
-func (sd *StackDriver) Fatal(format string, args ...interface{}) {
+func (l *StackDriverLogger) Fatal(format string, args ...interface{}) {
 	if UseSyslog() {
 		_, file, no, ok := runtime.Caller(1)
 		if ok {
@@ -57,7 +57,7 @@ func (sd *StackDriver) Fatal(format string, args ...interface{}) {
 			log.Printf(format, args...)
 		}
 	} else {
-		sd.logger.Log(
+		l.logger.Log(
 			logging.Entry{
 				Payload:  fmt.Sprintf(format, args...),
 				Severity: logging.Emergency,
@@ -66,7 +66,7 @@ func (sd *StackDriver) Fatal(format string, args ...interface{}) {
 	log.Fatalln("Exit: encoutered Log Fatal.")
 }
 
-func (sd *StackDriver) Error(format string, args ...interface{}) {
+func (l *StackDriverLogger) Error(format string, args ...interface{}) {
 	if UseSyslog() {
 		_, file, no, ok := runtime.Caller(1)
 		if ok {
@@ -77,7 +77,7 @@ func (sd *StackDriver) Error(format string, args ...interface{}) {
 			log.Printf(format, args...)
 		}
 	} else {
-		sd.logger.Log(
+		l.logger.Log(
 			logging.Entry{
 				Payload:  fmt.Sprintf(format, args...),
 				Severity: logging.Error,
@@ -85,7 +85,7 @@ func (sd *StackDriver) Error(format string, args ...interface{}) {
 	}
 }
 
-func (sd *StackDriver) Warning(format string, args ...interface{}) {
+func (l *StackDriverLogger) Warning(format string, args ...interface{}) {
 	if UseSyslog() {
 		_, file, no, ok := runtime.Caller(1)
 		if ok {
@@ -96,7 +96,7 @@ func (sd *StackDriver) Warning(format string, args ...interface{}) {
 			log.Printf(format, args...)
 		}
 	} else {
-		sd.logger.Log(
+		l.logger.Log(
 			logging.Entry{
 				Payload:  fmt.Sprintf(format, args...),
 				Severity: logging.Warning,
@@ -104,7 +104,7 @@ func (sd *StackDriver) Warning(format string, args ...interface{}) {
 	}
 }
 
-func (sd *StackDriver) Info(format string, args ...interface{}) {
+func (l *StackDriverLogger) Info(format string, args ...interface{}) {
 	if UseSyslog() {
 		_, file, no, ok := runtime.Caller(1)
 		if ok {
@@ -115,7 +115,7 @@ func (sd *StackDriver) Info(format string, args ...interface{}) {
 			log.Printf(format, args...)
 		}
 	} else {
-		sd.logger.Log(
+		l.logger.Log(
 			logging.Entry{
 				Payload:  fmt.Sprintf(format, args...),
 				Severity: logging.Info,
@@ -123,7 +123,7 @@ func (sd *StackDriver) Info(format string, args ...interface{}) {
 	}
 }
 
-func (sd *StackDriver) Debug(format string, args ...interface{}) {
+func (l *StackDriverLogger) Debug(format string, args ...interface{}) {
 	if UseSyslog() {
 		_, file, no, ok := runtime.Caller(1)
 		if ok {
@@ -134,7 +134,7 @@ func (sd *StackDriver) Debug(format string, args ...interface{}) {
 			log.Printf(format, args...)
 		}
 	} else {
-		sd.logger.Log(
+		l.logger.Log(
 			logging.Entry{
 				Payload:  fmt.Sprintf(format, args...),
 				Severity: logging.Debug,
