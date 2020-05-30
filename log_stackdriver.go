@@ -43,7 +43,9 @@ func (l *StackDriverLogger) Close() {
 }
 
 func UseSyslog() bool {
-	return appengine.IsDevAppServer() || strings.HasSuffix(os.Args[0], ".test")
+	return appengine.IsDevAppServer() ||
+		strings.HasSuffix(os.Args[0], ".test") ||
+		os.Getenv("LOGTOSTDERR") != ""
 }
 
 func (l *StackDriverLogger) Fatal(format string, args ...interface{}) {
