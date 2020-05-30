@@ -33,7 +33,7 @@ func NewStackDriverLogger(
 	}
 	logger := c.Logger(project_id)
 	return &StackDriverLogger{
-		client: client,
+		client: c,
 		logger: logger,
 	}
 }
